@@ -25,7 +25,7 @@ def exhandler(function, parser):
         function()
         exit(0)
     if args["verbose"]:
-        from mcc import set_verbosity
+        from dndoneshot import set_verbosity
         set_verbosity(args["verbose"])
 
     args.update(vars(parser.parse_known_args()[0]))
