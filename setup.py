@@ -28,9 +28,9 @@ setup(name='dndoneshot',
       tests_require=['pytest',],
       install_requires=[
       ],
-      packages=['mcc'],
-      scripts=['mcc/scripts/remote_deploy.py'],
-      package_data={'mcc': []},
+      packages=['dndoneshot'],
+      scripts=[''],
+      package_data={'dndoneshot': []},
       include_package_data=True,
       classifiers=[
           'Development Status :: 2 - Pre-Alpha',
