@@ -3,7 +3,7 @@
 from random import randrange, shuffle
 
 def location_adventure(custom_goals=None, sub_loc=None, custom_npcs=None,
-                        custom_climax=None, custom_intros=None):
+                        custom_climax=None, custom_intros=None, **kwargs):
     """Generates suggestions for a location based one shot adventure.
 
     Args:
@@ -17,7 +17,7 @@ def location_adventure(custom_goals=None, sub_loc=None, custom_npcs=None,
         custom_climax (list): A list of potential climax events.
 
     Returns:
-        An adventures goals, sub location, important NPCs, a suggested intro
+        A dictionary containing the adventures goals, sub location, important NPCs, a suggested intro
         and a suggested climax.
     """
 
@@ -26,7 +26,8 @@ def location_adventure(custom_goals=None, sub_loc=None, custom_npcs=None,
     intro = generate_intro(custom_intros=custom_intros)
     climax = generate_climax(custom_climax=custom_climax)
 
-    return goals, loc, npcs, intro, climax
+    return {"goals": goals, "loc": loc, "npcs": npcs, "intro": intro,
+            "climax": climax}
 
 def generate_goals(custom_goals=None, sub_loc=None):
     """Selects more detailed location and a goal either from the set of
@@ -61,7 +62,7 @@ def generate_goals(custom_goals=None, sub_loc=None):
                         "Parley with a villain in the dungeon.",
                         "Hide from a threat outside the dungeon.",
                         "pick_2."],
-            "wilderness":, ["Locate a dungeon or other site of interest.",
+            "wilderness": ["Locate a dungeon or other site of interest.",
                             "Assess the scope of a natural or unnatural disaster.",
                             "Escort an NPC to a destination.",
                             "Arrive at a destination without being seen by the villain's forces.",
@@ -95,10 +96,10 @@ def generate_goals(custom_goals=None, sub_loc=None):
                     "Rescue a character, monster, or object from a natural or unnatural disaster."]}
 
 
-    if user_defined_goals is None or len(user_defined_goals.keys()) < 1:
+    if custom_goals is None or len(custom_goals.keys()) < 1:
         this_goals = goals_by_sub_loc
     else:
-        this_goals = user_defined_goals
+        this_goals = custom_goals
 
     if sub_loc is None:
         available_sub_locs = list(this_goals.keys())
@@ -235,9 +236,9 @@ def generate_NPCs(custom_npcs=None):
             candidates = npc_data[npc]
 
         selected = randrange(len(candidates))
-        selecetd = candidates[selecetd]
+        selected = candidates[selected]
 
-        npcs_selected[npc] = selecetd
+        npcs_selected[npc] = selected
 
     return npcs_selected
 
@@ -264,7 +265,7 @@ def generate_intro(custom_intros=None):
                         "One night, the characters all dream about entering the adventure location.",
                         "A ghost appears and terrorizes a village. Research reveals that it can be put to rest only by entering the adventure location."]
 
-    if costum_intros is None or (isinstance(custom_intros, list) and len(costum_intros) < 1):
+    if custom_intros is None or (isinstance(custom_intros, list) and len(custom_intros) < 1):
         intros = suggested_intros
     else:
         intros = custom_intros
